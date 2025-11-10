@@ -17,7 +17,6 @@ validate_args <- function(name, lstargs) {
   }
 }
 
-#' @importFrom rlist list.merge
 .hc_opt <- function(hc, name, ...) {
   assertthat::assert_that(is.highchart(hc))
   
@@ -28,7 +27,7 @@ validate_args <- function(name, lstargs) {
   if (is.null(hc$x$hc_opts[[name]])) {
     hc$x$hc_opts[[name]] <- list(...)
   } else {
-    hc$x$hc_opts[[name]] <- list.merge(hc$x$hc_opts[[name]], list(...))
+    hc$x$hc_opts[[name]] <- list_merge(hc$x$hc_opts[[name]], list(...))
   }
 
   # Setting fonts
@@ -178,7 +177,7 @@ tooltip_chart <- function(accesor = NULL,
     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
   }
 
-  hc_opts <- rlist::list.merge(
+  hc_opts <- list.merge(
     getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
     list(chart = list(backgroundColor = "transparent")),
     list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),

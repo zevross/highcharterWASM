@@ -96,7 +96,7 @@ require("viridisLite")
 dclass <- data_frame(from = seq(0, 10, by = 2),
                      to = c(seq(2, 10, by = 2), 50),
                      color = substring(viridis(length(from), option = "B"), 0, 7))
-dclass <- setNames(rlist::list.parse(dclass), NULL)
+dclass <- setNames(list_parse(dclass), NULL)
 
 highchart(type = "map", debug = TRUE) %>% 
   hc_title(text = "US Counties unemployment rates") %>% 

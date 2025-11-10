@@ -1,3 +1,75 @@
+# desc <- read.dcf("DESCRIPTION")
+
+# # Extract Imports
+# imports <- desc[,"Imports"]
+# imports <- strsplit(imports, ",\\s*")[[1]]
+# imports <- gsub("\\s*\\(.*\\)", "", imports)  # Remove version requirements
+# imports <- trimws(imports)
+
+# # Check each import's dependencies
+# for (pkg in imports) {
+#   deps <- tools::package_dependencies(pkg, recursive = TRUE)
+#   if (any(c("curl", "XML") %in% deps[[1]])) {
+#     cat(sprintf("⚠️  %s brings: %s\n", pkg, 
+#                 paste(intersect(deps[[1]], c("curl", "XML")), collapse = ", ")))
+#   }
+# }
+
+# Custom list merge function to replace function from rlist
+# Recursively merges lists, with later arguments taking precedence
+list_merge <- function(...) {
+  lists <- list(...)
+  
+  if (length(lists) == 0) return(list())
+  if (length(lists) == 1) return(lists[[1]])
+  
+  # Start with first list
+  result <- lists[[1]]
+  
+  # Merge each subsequent list
+  for (i in seq_along(lists)[-1]) {
+    result <- merge_two_lists(result, lists[[i]])
+  }
+  
+  result
+}
+
+# Helper function to merge two lists recursively
+merge_two_lists <- function(x, y) {
+  if (is.null(x)) return(y)
+  if (is.null(y)) return(x)
+  
+  # If either is not a list, y takes precedence
+  if (!is.list(x) || !is.list(y)) return(y)
+  
+  # Get all unique names
+  all_names <- unique(c(names(x), names(y)))
+  
+  result <- list()
+  for (nm in all_names) {
+    x_has <- nm %in% names(x)
+    y_has <- nm %in% names(y)
+    
+    if (x_has && y_has) {
+      # Both have the name
+      if (is.list(x[[nm]]) && is.list(y[[nm]])) {
+        # Both are lists, recurse
+        result[[nm]] <- merge_two_lists(x[[nm]], y[[nm]])
+      } else {
+        # At least one is not a list, y takes precedence
+        result[[nm]] <- y[[nm]]
+      }
+    } else if (y_has) {
+      result[[nm]] <- y[[nm]]
+    } else {
+      result[[nm]] <- x[[nm]]
+    }
+  }
+  
+  result
+}
+
+
 get_box_values <- function(x) {
   boxplot.stats(x)$stats |>
     t() |>
@@ -312,13 +384,13 @@ list_parse <- function(df) {
     }
   }
 
+  # Replace rlist::list.parse with purrr::transpose
   purrr::map_if(df, is.factor, as.character) |>
     as_tibble() |>
-    list.parse() |>
+    purrr::transpose() |>  # <-- Use purrr::transpose instead
     setNames(NULL)
 }
 
-#' @importFrom rlist list.parse
 #' @rdname list_parse
 #' @export
 list_parse2 <- function(df) {

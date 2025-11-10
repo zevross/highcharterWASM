@@ -2,7 +2,8 @@
 % Please edit documentation in R/highcharter-package.R
 \docType{package}
 \name{highcharter}
-\alias{highcharter-package}
+\alias{highcharterWASM}
+\alias{highcharterWASM-package}
 \alias{highcharter}
 \title{An \code{htmlwidget} interface to the
 Highcharts javascript chart library}

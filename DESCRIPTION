@@ -1,4 +1,4 @@
-Package: highcharter
+Package: highcharterWASM
 Type: Package
 Version: 0.12.2.0
 Title: A Wrapper for the 'Highcharts' Library
@@ -34,14 +34,12 @@ Depends:
 Imports:
     htmlwidgets,
     purrr,
-    rlist,
     assertthat,
     zoo,
     dplyr (>= 1.0.0),
     tibble (>= 1.1),
     stringr (>= 1.3.0),
     broom,
-    xts,
     tidyr,
     htmltools,
     jsonlite,
@@ -54,10 +52,6 @@ Suggests:
     knitr,
     rmarkdown,
     survival,
-    quantmod,
-    igraph,
-    ggplot2,
-    httr,
     viridisLite,
     shiny,
     MASS,
@@ -77,8 +71,6 @@ Suggests:
     here,
     rvest,
     tidytext,
-    igraphdata,
-    ggplot2movies,
     janitor,
     spelling,
 LazyData: true

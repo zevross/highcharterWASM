@@ -78,7 +78,6 @@ hc_add_series.ts <- function(hc, data, ...) {
 #' @param hc A `highchart` `htmlwidget` object.
 #' @param data A `xts` object.
 #' @param ... Arguments defined in \url{https://api.highcharts.com/highcharts/plotOptions.series}.
-#' @importFrom xts is.xts
 #' @examples
 #' 
 #' if(require("quantmod")){
@@ -667,7 +666,7 @@ hc_add_event_point <- function(hc, series = "series", event = "click") {
     .Names = series
   )
 
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+  hc$x$hc_opts$plotOptions <- list.merge(
     hc$x$hc_opts$plotOptions,
     eventobj
   )
@@ -698,7 +697,7 @@ hc_add_event_series <- function(hc, series = "series", event = "click") {
     .Names = series
   )
 
-  hc$x$hc_opts$plotOptions <- rlist::list.merge(
+  hc$x$hc_opts$plotOptions <- list.merge(
     hc$x$hc_opts$plotOptions,
     eventobj
   )

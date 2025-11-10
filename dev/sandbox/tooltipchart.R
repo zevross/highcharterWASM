@@ -47,7 +47,7 @@ options(highcharter.theme = hc_theme_smpl(), highcharter.debug = TRUE)
 #     hc_opts[["series"]][[1]][["data"]] <- sprintf("point.%s", accesor)
 #   }
 #   
-#   hc_opts <- rlist::list.merge(
+#   hc_opts <- list.merge(
 #     getOption("highcharter.chart")[c("title", "yAxis", "xAxis", "credits", "exporting")],
 #     list(chart = list(backgroundColor = "transparent")),
 #     list(legend = list(enabled = FALSE), plotOptions = list(series = list(animation = FALSE))),
